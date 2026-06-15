@@ -174,112 +174,79 @@ class _DiscoveryScreenState extends ConsumerState<DiscoveryScreen> {
           ),
           if (_selectedEvent != null)
             Positioned(
-              bottom: 100,
-              left: 20,
-              right: 20,
+              bottom: 90,
+              left: 16,
+              right: 16,
               child: Card(
                 color: Theme.of(context).cardColor,
-                elevation: 12,
-                shadowColor: Colors.black26,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                elevation: 6,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               _selectedEvent!.reason,
-                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                height: 1.2,
-                              ),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.close, size: 20),
-                              onPressed: () => setState(() => _selectedEvent = null),
-                              constraints: const BoxConstraints(),
-                              padding: const EdgeInsets.all(6),
-                            ),
+                          const SizedBox(width: 8),
+                          GestureDetector(
+                            onTap: () => setState(() => _selectedEvent = null),
+                            child: const Icon(Icons.close, size: 18, color: Colors.white70),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 6),
                       Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(Icons.access_time, size: 18, color: Theme.of(context).primaryColor),
-                          ),
-                          const SizedBox(width: 12),
+                          const Icon(Icons.access_time, size: 14, color: Colors.white70),
+                          const SizedBox(width: 6),
                           Expanded(
                             child: Text(
-                              DateFormat('EEEE, MMM d • HH:mm').format(_selectedEvent!.startTime),
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w500,
-                              ),
+                              DateFormat('MMM d, HH:mm').format(_selectedEvent!.startTime),
+                              style: const TextStyle(fontSize: 12, color: Colors.white),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 4),
                       Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Icon(Icons.person_outline, size: 18, color: Theme.of(context).primaryColor),
-                          ),
-                          const SizedBox(width: 12),
+                          const Icon(Icons.person_outline, size: 14, color: Colors.white70),
+                          const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               _selectedEvent!.hostId == ref.read(authRepositoryProvider).currentUser?.uid 
-                                  ? 'Hosted by You' 
-                                  : 'Hosted by ${_selectedHostEmail ?? '...'}',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w500,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                                  ? 'You' 
+                                  : 'Traveller: ${_selectedHostEmail ?? '...'}',
+                              style: const TextStyle(fontSize: 12, color: Colors.white),
                             ),
                           ),
                         ],
                       ),
                       if (_selectedEvent!.hostId != ref.read(authRepositoryProvider).currentUser?.uid) ...[
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
+                        const SizedBox(height: 8),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: OutlinedButton.icon(
                             onPressed: () {
                               context.push('/chat/$_selectedHostId');
                               setState(() => _selectedEvent = null);
                             },
-                            icon: const Icon(Icons.chat_bubble_outline, size: 20),
-                            label: const Text('Message Host', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              elevation: 0,
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Colors.white,
+                            icon: const Icon(Icons.chat_bubble_outline, size: 14, color: Colors.white),
+                            label: const Text('Message', style: TextStyle(fontSize: 12, color: Colors.white)),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                              minimumSize: const Size(0, 32),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
                           ),
                         ),

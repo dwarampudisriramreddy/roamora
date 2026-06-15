@@ -34,6 +34,9 @@ class DiscoveryRepository {
   Stream<List<EventModel>> getNearbyEvents(DiscoveryMode mode, [String? currentUserId]) {
     Query query = _firestore.collection('events');
     
+    final oneDayAgo = DateTime.now().subtract(const Duration(days: 1)).toIso8601String();
+    query = query.where('startTime', isGreaterThanOrEqualTo: oneDayAgo);
+    
     if (mode == DiscoveryMode.mine && currentUserId != null) {
       query = query.where('hostId', isEqualTo: currentUserId);
     }
