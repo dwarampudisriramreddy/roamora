@@ -74,7 +74,11 @@ FirebaseAuth firebaseAuth(FirebaseAuthRef ref) {
 
 @riverpod
 GoogleSignIn googleSignIn(GoogleSignInRef ref) {
-  return GoogleSignIn();
+  // Replace 'YOUR_WEB_CLIENT_ID_HERE' with your actual Web Client ID
+  // found in Firebase Console > Project Settings > General > Your Apps > Web App (or Android config)
+  return GoogleSignIn(
+    clientId: '553315913700-phfi41sm9d7n45d2k70jhihal2qjbn0n.apps.googleusercontent.com',
+  );
 }
 
 @riverpod
