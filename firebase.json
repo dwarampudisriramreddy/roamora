@@ -1,0 +1,28 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "roamora-9ab71",
+          "appId": "1:553315913700:android:5eb4a71c9ff133548d01f1",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "roamora-9ab71",
+          "configurations": {
+            "android": "1:553315913700:android:5eb4a71c9ff133548d01f1",
+            "ios": "1:553315913700:ios:792961981eb8fea78d01f1",
+            "macos": "1:553315913700:ios:792961981eb8fea78d01f1",
+            "web": "1:553315913700:web:92a97201099441e68d01f1",
+            "windows": "1:553315913700:web:9249e6d3c75c729a8d01f1"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}
