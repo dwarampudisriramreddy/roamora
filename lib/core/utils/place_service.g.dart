@@ -6,11 +6,11 @@ part of 'place_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$placeServiceHash() => r'8cbc6d3c793943841db8701243a414dc6ddcaa81';
+String _$placeServiceHash() => r'2da5a44022fd6e7d8bff29eb553648c493ab0cbe';
 
 /// See also [placeService].
 @ProviderFor(placeService)
-final placeServiceProvider = AutoDisposeProvider<PlaceService>.internal(
+final placeServiceProvider = AutoDisposeProvider<PlaceServiceProvider>.internal(
   placeService,
   name: r'placeServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final placeServiceProvider = AutoDisposeProvider<PlaceService>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef PlaceServiceRef = AutoDisposeProviderRef<PlaceService>;
+typedef PlaceServiceRef = AutoDisposeProviderRef<PlaceServiceProvider>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
