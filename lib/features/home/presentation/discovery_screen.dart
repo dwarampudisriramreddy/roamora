@@ -174,48 +174,116 @@ class _DiscoveryScreenState extends ConsumerState<DiscoveryScreen> {
           ),
           if (_selectedEvent != null)
             Positioned(
-              bottom: 80,
+              bottom: 100,
               left: 20,
               right: 20,
               child: Card(
-                color: Colors.white,
-                elevation: 4,
+                color: Theme.of(context).cardColor,
+                elevation: 12,
+                shadowColor: Colors.black26,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Event', style: Theme.of(context).textTheme.titleMedium),
-                          IconButton(
-                            icon: const Icon(Icons.close, size: 16),
-                            onPressed: () => setState(() => _selectedEvent = null),
-                            constraints: const BoxConstraints(),
-                            padding: EdgeInsets.zero,
+                          Expanded(
+                            child: Text(
+                              _selectedEvent!.reason,
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                height: 1.2,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.close, size: 20),
+                              onPressed: () => setState(() => _selectedEvent = null),
+                              constraints: const BoxConstraints(),
+                              padding: const EdgeInsets.all(6),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 4),
-                      Text('Contact: ${_selectedEvent!.hostId == ref.read(authRepositoryProvider).currentUser?.uid ? 'Me' : _selectedHostEmail ?? 'Loading...'}', style: const TextStyle(fontSize: 12)),
-                      Text('Time: ${DateFormat('MMM d, HH:mm').format(_selectedEvent!.startTime)}', style: const TextStyle(fontSize: 12)),
-                      const SizedBox(height: 4),
-                      Text(_selectedEvent!.reason, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      if (_selectedEvent!.hostId != ref.read(authRepositoryProvider).currentUser?.uid)
-                        Center(
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(Icons.access_time, size: 18, color: Theme.of(context).primaryColor),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              DateFormat('EEEE, MMM d • HH:mm').format(_selectedEvent!.startTime),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(Icons.person_outline, size: 18, color: Theme.of(context).primaryColor),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              _selectedEvent!.hostId == ref.read(authRepositoryProvider).currentUser?.uid 
+                                  ? 'Hosted by You' 
+                                  : 'Hosted by ${_selectedHostEmail ?? '...'}',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_selectedEvent!.hostId != ref.read(authRepositoryProvider).currentUser?.uid) ...[
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
                           child: ElevatedButton.icon(
                             onPressed: () {
                               context.push('/chat/$_selectedHostId');
                               setState(() => _selectedEvent = null);
                             },
-                            icon: const Icon(Icons.chat, size: 16),
-                            label: const Text('Chat', style: TextStyle(fontSize: 12)),
-                            style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
+                            icon: const Icon(Icons.chat_bubble_outline, size: 20),
+                            label: const Text('Message Host', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              elevation: 0,
+                              backgroundColor: Theme.of(context).primaryColor,
+                              foregroundColor: Colors.white,
+                            ),
                           ),
                         ),
+                      ],
                     ],
                   ),
                 ),
